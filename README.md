@@ -1,2 +1,2 @@
 # launcherlib
-A minecrafte launcher library written in rust.
+A minecraft launcher library written in rust.
