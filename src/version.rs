@@ -145,14 +145,13 @@ impl Version {
             .iter()
             .map(|arg| format(arg, &variables))
             .collect();
-        let output = Command::new("java")
+        let mut child = Command::new("java")
             .args(args)
             .args(jvm_args)
             .arg(&self.main_class)
             .args(game_args)
-            .output()
-            .await
+            .spawn()
             .unwrap();
-        println!("{}", String::from_utf8_lossy(&output.stderr));
+        child.wait().await.unwrap();
     }
 }
