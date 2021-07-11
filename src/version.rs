@@ -7,7 +7,7 @@ use futures::{stream, StreamExt};
 use maplit::hashmap;
 use serde_derive::*;
 use std::{collections::HashMap, io::Cursor};
-use tokio::process::Command;
+use std::process::{Command, Stdio};
 use zip::ZipArchive;
 
 use crate::{context::Context, format};
