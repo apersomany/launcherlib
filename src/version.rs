@@ -152,7 +152,7 @@ impl Version {
             .collect();
         let mut command = Command::new("java");
         if let Some(path) = path {
-            command.current_dir(path);
+            // command.current_dir(path);
         }
         let output = command
             .creation_flags(0x08000000)
