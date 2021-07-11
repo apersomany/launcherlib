@@ -133,6 +133,10 @@ impl Version {
             "assets_index_name" => self.assets.id.clone(),
             "classpath" => self.classpath(ctx)
         };
+        let path = match vars.get("game_directory") {
+            Some(path) => Some(path.to_string()),
+            None => None,
+        };
         vars.into_iter().for_each(|(k, v)| {
             variables.insert(k, v.to_string());
         });
@@ -146,7 +150,11 @@ impl Version {
             .iter()
             .map(|arg| format(arg, &variables))
             .collect();
-        Command::new("java")
+        let mut command = Command::new("java");
+        if let Some(path) = path {
+            command.current_dir(path);
+        }
+        command
             .creation_flags(0x08000000)
             .args(jvm_args)
             .arg(&self.main_class)
