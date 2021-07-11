@@ -150,9 +150,7 @@ impl Version {
             .arg(&self.main_class)
             .args(args)
             .args(game_args)
-            .stdin(Stdio::null())
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
+            .creation_flags(0x08000000)
             .spawn()
             .unwrap();
     }
