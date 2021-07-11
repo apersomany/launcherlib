@@ -152,6 +152,7 @@ impl Version {
             .args(game_args)
             .stdin(Stdio::null())
             .stdout(Stdio::null())
+            .stderr(Stdio::null())
             .spawn()
             .unwrap();
     }
