@@ -154,13 +154,14 @@ impl Version {
         if let Some(path) = path {
             command.current_dir(path);
         }
-        command
+        let output = command
             .creation_flags(0x08000000)
             .args(jvm_args)
             .arg(&self.main_class)
             .args(args)
             .args(game_args)
-            .spawn()
+            .output()
             .unwrap();
+        println!("{}", String::from_utf8_lossy(&output.stderr));
     }
 }
