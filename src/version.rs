@@ -6,8 +6,8 @@ use anyhow::Result;
 use futures::{stream, StreamExt};
 use maplit::hashmap;
 use serde_derive::*;
+use std::process::{Command, Stdio};
 use std::{collections::HashMap, io::Cursor};
-use tokio::process::Command;
 use zip::ZipArchive;
 
 use crate::{context::Context, format};
@@ -146,12 +146,15 @@ impl Version {
             .map(|arg| format(arg, &variables))
             .collect();
         let mut child = Command::new("java")
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
             .args(jvm_args)
             .arg(&self.main_class)
             .args(args)
             .args(game_args)
             .spawn()
             .unwrap();
-        child.wait().await.unwrap();
+        child.wait()
     }
 }
