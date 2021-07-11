@@ -146,9 +146,9 @@ impl Version {
             .map(|arg| format(arg, &variables))
             .collect();
         let mut child = Command::new("java")
-            .args(args)
             .args(jvm_args)
             .arg(&self.main_class)
+            .args(args)
             .args(game_args)
             .spawn()
             .unwrap();
