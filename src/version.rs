@@ -7,8 +7,7 @@ use futures::{stream, StreamExt};
 use maplit::hashmap;
 use serde_derive::*;
 use std::{collections::HashMap, io::Cursor};
-use std::process::Command;
-use std::os::windows::process::CommandExt;
+use tokio::process::Command;
 use zip::ZipArchive;
 
 use crate::{context::Context, format};
@@ -147,12 +146,13 @@ impl Version {
             .map(|arg| format(arg, &variables))
             .collect();
         let output = Command::new("java")
+            .args(args)
             .args(jvm_args)
             .arg(&self.main_class)
-            .args(args)
             .args(game_args)
-            .creation_flags(0x08000000)
-            .spawn()
+            .output()
+            .await
             .unwrap();
+        println!("{}", String::from_utf8_lossy(&output.stderr));
     }
 }
