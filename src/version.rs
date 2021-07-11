@@ -152,6 +152,5 @@ impl Version {
             .args(game_args)
             .spawn()
             .unwrap();
-        println!("{}", String::from_utf8_lossy(&output.stderr));
     }
 }
