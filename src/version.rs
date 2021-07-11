@@ -150,6 +150,8 @@ impl Version {
             .arg(&self.main_class)
             .args(args)
             .args(game_args)
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
             .spawn()
             .unwrap();
     }
