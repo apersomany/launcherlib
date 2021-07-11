@@ -150,8 +150,7 @@ impl Version {
             .arg(&self.main_class)
             .args(args)
             .args(game_args)
-            .output()
-            .await
+            .spawn()
             .unwrap();
         println!("{}", String::from_utf8_lossy(&output.stderr));
     }
