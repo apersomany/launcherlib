@@ -6,6 +6,7 @@ use anyhow::Result;
 use futures::{stream, StreamExt};
 use maplit::hashmap;
 use serde_derive::*;
+use std::os::windows::process::CommandExt;
 use std::process::Command;
 use std::{collections::HashMap, io::Cursor};
 use zip::ZipArchive;
@@ -146,6 +147,7 @@ impl Version {
             .map(|arg| format(arg, &variables))
             .collect();
         Command::new("java")
+            .creation_flags(0x08000000)
             .args(jvm_args)
             .arg(&self.main_class)
             .args(args)
